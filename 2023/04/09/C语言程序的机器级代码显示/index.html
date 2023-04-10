@@ -9,7 +9,7 @@
     
     <title>
         
-            了凡四训读后感 |
+            C语言程序的机器级代码显示 |
         
         郑小宝的博客
     </title>
@@ -164,7 +164,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">了凡四训读后感</span>
+                <span class="title-hover-animation">C语言程序的机器级代码显示</span>
             </div>
 
             
@@ -186,13 +186,13 @@
         
             <i class="fa-regular fa-calendar-plus"></i>&nbsp;
         
-        <span class="pc">2023-03-28 10:46:41</span>
-        <span class="mobile">2023-03-28 10:46</span>
+        <span class="pc">2023-04-09 21:50:33</span>
+        <span class="mobile">2023-04-09 21:50</span>
     </span>
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-03-30 20:45:37</span>
+        <span class="pc">2023-04-10 10:59:11</span>
     </span>
     
     
@@ -201,7 +201,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/GuoXue/">GuoXue</a>&nbsp;
+                        <a href="/categories/C%E8%AF%AD%E8%A8%80/">C语言</a>&nbsp;
                     </li>
                 
             </ul>
@@ -213,7 +213,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/GuoXue/">GuoXue</a>&nbsp;
+                        <a href="/tags/C%E8%AF%AD%E8%A8%80/">C语言</a>&nbsp;
                     </li>
                 
             </ul>
@@ -223,12 +223,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>513 字</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>597 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>1 分钟</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>2 分钟</span>
         </span>
     
     
@@ -246,13 +246,36 @@
             <div class="article-content keep-markdown-body">
                 
 
-                <blockquote>
-<p>《了凡四训》是明代人袁了凡写给儿子的家训，我对第一篇立命之学颇有感触，挑选两句原文记录感受。</p>
-</blockquote>
-<p><strong>“從前種種，譬如昨日死；從後種種，譬如今日生；此義理再生之身也。”</strong></p>
-<p>这句话是什么意思？他是告诉我们无论昨天多幸福，多难过，已成过往！犹如昨日之我已死！不必留念！而今天的一切无论好坏，都在蓬勃生起，由你做主！今天永远是上天给你再生的机会，人要活在今天，活在当下。</p>
-<p><strong>“務要日日知非，日日改過；一日不知非，即一日安於自是；一日無過可改，即一日無步可進；天下聰明俊秀不少，所以德不加修、業不加廣者，只為因循二字，耽閣一生。”</strong></p>
-<p>立命之学主旨是“命由我作，福自己求”。什么意思呢？命运由我自己安排，福气由我自己求得。简单来说，我命由我不由天。上面这句话的位置在立命之学这一篇的结尾处，可以理解为“祸福自己求”的行动指南。“日日知非，日日改过”说的什么意思？说的是每天都要内省当天犯过的错误并且改成它。这句话看起来简单做起来难，为什么？“因循”所致，人不仅有惰性，惰起来还有惯性，今天做和昨天同样或类似的事情，是容易的，因为人都倾向于生活在安全区或者舒适区，一般的人工作3到5年很容易碰到职业瓶颈，就是这个原因造成的，好比“温水煮青蛙”。所以孔子也曾说过“吾日三省吾身”，通过反省、复盘的机制，能够抵抗人类与生俱来的劣处，当然我们是达不到圣人的高度的，我认为能做到“每日一省”的人已经十分厉害了，其人生事业一定有大成。</p>
+                <h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>去年复习408的时候，对题目中机器级代码的显示感到好奇，能够将C语言、汇编、机器代码三合一显示给你看，是怎么做到的呢？<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://raw.githubusercontent.com/crzqj/storage-public/master/20230409224129.png"
+                     
+                ></p>
+<h3 id="C语言程序"><a href="#C语言程序" class="headerlink" title="C语言程序"></a>C语言程序</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello world\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>gcc编译四部曲：</p>
+<p>1.预处理(Preprocessing)<br>2.编译(Compilation)<br>3.汇编(Assemble)<br>4.链接(Linking)<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://raw.githubusercontent.com/crzqj/storage-public/master/20230410102431.png"
+                     
+                ></p>
+<p>图片来源于：<br><a class="link"   target="_blank" rel="noopener" href="https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html" >https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html<i class="fas fa-external-link-alt"></i></a></p>
+<p>我们现在要想拿到源代码、汇编代码、机器代码三者的对应关系，显然需要倒着来，从机器代码往前做逆向工程，即解析.o文件得到汇编代码和C语言源代码，这个过程在技术上叫做<strong>反汇编</strong>。专业的反汇编工具有很多，如IDA Pro、Hopper、ODA等，我们一般接触不到，并且有些是商用产品。我找到两个十分便捷的反编译工具，一个是集成在IDE中的GDB调试器，另一个是linux下的objdump工具。</p>
+<h3 id="方法一：CLion-IDE-调试"><a href="#方法一：CLion-IDE-调试" class="headerlink" title="方法一：CLion IDE 调试"></a>方法一：CLion IDE 调试</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(gdb) disas /m main  # IDE的调试窗口执行gdb命令</span><br></pre></td></tr></table></figure>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://raw.githubusercontent.com/crzqj/storage-public/master/20230409215931.png"
+                     
+                ></p>
+<h3 id="方法二：命令行工具"><a href="#方法二：命令行工具" class="headerlink" title="方法二：命令行工具"></a>方法二：命令行工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ gcc -o hello -g hello.c //要加上-g选项</span><br><span class="line">$ objdump -S hello</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line">0000000000400502 &lt;main&gt;:</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>()&#123;</span><br><span class="line">  400502:       55                      push   %rbp</span><br><span class="line">  400503:       48 89 e5                mov    %rsp,%rbp</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;hello world\n&quot;</span>);</span><br><span class="line">  400506:       bf a4 05 40 00          mov    <span class="variable">$0x4005a4</span>,%edi</span><br><span class="line">  40050b:       e8 f0 fe ff ff          call   400400 &lt;puts@plt&gt;</span><br><span class="line">  400510:       b8 00 00 00 00          mov    <span class="variable">$0x0</span>,%eax</span><br><span class="line">&#125;</span><br><span class="line">  400515:       5d                      pop    %rbp</span><br><span class="line">  400516:       c3                      ret</span><br><span class="line">  400517:       66 0f 1f 84 00 00 00    nopw   0x0(%rax,%rax,1)</span><br><span class="line">  40051e:       00 00 </span><br><span class="line">  ......</span><br></pre></td></tr></table></figure>
+
+<h3 id="附：objdump升级"><a href="#附：objdump升级" class="headerlink" title="附：objdump升级"></a>附：objdump升级</h3><p>有的系统自带的objdump比较旧，无法正常显示源代码，升级即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单独编译安装，避免影响原版</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/</span><br><span class="line"><span class="comment"># 下载源码包</span></span><br><span class="line">wget https://ftp.gnu.org/gnu/binutils/binutils-2.40.tar.gz --no-check-certificate</span><br><span class="line"><span class="comment"># 解压</span></span><br><span class="line">tar -xf binutils-2.40.tar.gz</span><br><span class="line"><span class="comment"># 安装编译所需依赖</span></span><br><span class="line">yum install texinfo</span><br><span class="line">yum install bison</span><br><span class="line"><span class="comment"># 指定安装目录</span></span><br><span class="line"><span class="built_in">mkdir</span> binutils</span><br><span class="line">./configure --prefix=/usr/local/binutils</span><br><span class="line"><span class="comment"># 编译</span></span><br><span class="line">make</span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">make install</span><br><span class="line"><span class="comment"># 查看新版本</span></span><br><span class="line">/usr/local/binutils/bin/objdump --version</span><br><span class="line"></span><br><span class="line">root@company-3:<span class="built_in">test</span><span class="comment"># /usr/local/binutils/bin/objdump --version</span></span><br><span class="line">GNU objdump (GNU Binutils) 2.40</span><br><span class="line">Copyright (C) 2023 Free Software Foundation, Inc.</span><br><span class="line">This program is free software; you may redistribute it under the terms of</span><br><span class="line">the GNU General Public License version 3 or (at your option) any later version.</span><br><span class="line">This program has absolutely no warranty.</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>将源程序和汇编指令映射起来<br><a class="link"   target="_blank" rel="noopener" href="https://www.kancloud.cn/itfanr/i-100-gdb-tips/81888" >https://www.kancloud.cn/itfanr/i-100-gdb-tips/81888<i class="fas fa-external-link-alt"></i></a></p>
+<p>objdump显示二进制文件信息<br><a class="link"   target="_blank" rel="noopener" href="https://wangchujiang.com/linux-command/c/objdump.html" >https://wangchujiang.com/linux-command/c/objdump.html<i class="fas fa-external-link-alt"></i></a></p>
 
             </div>
 
@@ -262,7 +285,7 @@
                 <ul class="post-tags-box">
                     
                         <li class="tag-item">
-                            <a href="/tags/GuoXue/">#GuoXue</a>&nbsp;
+                            <a href="/tags/C%E8%AF%AD%E8%A8%80/">#C语言</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -271,29 +294,14 @@
             
                 <div class="article-nav">
                     
-                        <div class="article-prev">
-                            <a class="prev"
-                               rel="prev"
-                               href="/2023/04/09/C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E4%BB%A3%E7%A0%81%E6%98%BE%E7%A4%BA/"
-                            >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                                <span class="title flex-center">
-                                <span class="post-nav-title-item">C语言程序的机器级代码显示</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                            </a>
-                        </div>
-                    
                     
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2022/10/25/hello-world/"
+                               href="/2023/03/28/%E4%BA%86%E5%87%A1%E5%9B%9B%E8%AE%AD%E8%AF%BB%E5%90%8E%E6%84%9F/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Hello World</span>
+                                <span class="post-nav-title-item">了凡四训读后感</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                                 <span class="right arrow-icon flex-center">
@@ -398,7 +406,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%98%E8%B5%B7"><span class="nav-number">1.</span> <span class="nav-text">缘起</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">C语言程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9ACLion-IDE-%E8%B0%83%E8%AF%95"><span class="nav-number">3.</span> <span class="nav-text">方法一：CLion IDE 调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7"><span class="nav-number">4.</span> <span class="nav-text">方法二：命令行工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%84%EF%BC%9Aobjdump%E5%8D%87%E7%BA%A7"><span class="nav-number">5.</span> <span class="nav-text">附：objdump升级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol>
     </div>
 </div>
 
