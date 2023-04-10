@@ -51,7 +51,7 @@
                      data-src="https://raw.githubusercontent.com/crzqj/storage-public/master/20230409224129.png"
                      
                 ></p>
-<h3 id="C语言程序"><a href="#C语言程序" class="headerlink" title="C语言程序"></a>C语言程序</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello world\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="C语言程序的编译过程"><a href="#C语言程序的编译过程" class="headerlink" title="C语言程序的编译过程"></a>C语言程序的编译过程</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello world\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>gcc编译四部曲：</p>
 <p>1.预处理(Preprocessing)<br>2.编译(Compilation)<br>3.汇编(Assemble)<br>4.链接(Linking)<br><img  
                      lazyload
