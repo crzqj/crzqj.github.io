@@ -1,47 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>C语言程序的机器级代码显示</title>
-    <url>/2023/04/09/C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E4%BB%A3%E7%A0%81%E6%98%BE%E7%A4%BA/</url>
-    <content><![CDATA[<h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>去年复习408的时候，对题目中机器级代码的显示感到好奇，能够将C语言、汇编、机器代码三合一显示给你看，是怎么做到的呢？<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://raw.githubusercontent.com/crzqj/storage-public/master/20230409224129.png"
-                     
-                ></p>
-<h3 id="C语言程序的编译过程"><a href="#C语言程序的编译过程" class="headerlink" title="C语言程序的编译过程"></a>C语言程序的编译过程</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello world\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>gcc编译四部曲：</p>
-<p>1.预处理(Preprocessing)<br>2.编译(Compilation)<br>3.汇编(Assemble)<br>4.链接(Linking)<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://raw.githubusercontent.com/crzqj/storage-public/master/20230410102431.png"
-                     
-                ></p>
-<p>图片来源于：<br><a class="link"   href="https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html" >https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html<i class="fas fa-external-link-alt"></i></a></p>
-<p>我们现在要想拿到源代码、汇编代码、机器代码三者的对应关系，显然需要倒着来，从机器代码往前做逆向工程，即解析.o文件得到汇编代码和C语言源代码，这个过程在技术上叫做<strong>反汇编</strong>。专业的反汇编工具有很多，如IDA Pro、Hopper、ODA等，我们一般接触不到，并且有些是商用产品。我找到两个十分便捷的反编译工具，一个是集成在IDE中的GDB调试器，另一个是linux下的objdump工具。</p>
-<h3 id="方法一：CLion-IDE-调试"><a href="#方法一：CLion-IDE-调试" class="headerlink" title="方法一：CLion IDE 调试"></a>方法一：CLion IDE 调试</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(gdb) disas /m main  # IDE的调试窗口执行gdb命令</span><br></pre></td></tr></table></figure>
-<p><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://raw.githubusercontent.com/crzqj/storage-public/master/20230409215931.png"
-                     
-                ></p>
-<h3 id="方法二：命令行工具"><a href="#方法二：命令行工具" class="headerlink" title="方法二：命令行工具"></a>方法二：命令行工具</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ gcc -o hello -g hello.c //要加上-g选项</span><br><span class="line">$ objdump -S hello</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line">0000000000400502 &lt;main&gt;:</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>()&#123;</span><br><span class="line">  400502:       55                      push   %rbp</span><br><span class="line">  400503:       48 89 e5                mov    %rsp,%rbp</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;hello world\n&quot;</span>);</span><br><span class="line">  400506:       bf a4 05 40 00          mov    <span class="variable">$0x4005a4</span>,%edi</span><br><span class="line">  40050b:       e8 f0 fe ff ff          call   400400 &lt;puts@plt&gt;</span><br><span class="line">  400510:       b8 00 00 00 00          mov    <span class="variable">$0x0</span>,%eax</span><br><span class="line">&#125;</span><br><span class="line">  400515:       5d                      pop    %rbp</span><br><span class="line">  400516:       c3                      ret</span><br><span class="line">  400517:       66 0f 1f 84 00 00 00    nopw   0x0(%rax,%rax,1)</span><br><span class="line">  40051e:       00 00 </span><br><span class="line">  ......</span><br></pre></td></tr></table></figure>
-
-<h3 id="附：objdump升级"><a href="#附：objdump升级" class="headerlink" title="附：objdump升级"></a>附：objdump升级</h3><p>有的系统自带的objdump比较旧，无法正常显示源代码，升级即可。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 单独编译安装，避免影响原版</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/</span><br><span class="line"><span class="comment"># 下载源码包</span></span><br><span class="line">wget https://ftp.gnu.org/gnu/binutils/binutils-2.40.tar.gz --no-check-certificate</span><br><span class="line"><span class="comment"># 解压</span></span><br><span class="line">tar -xf binutils-2.40.tar.gz</span><br><span class="line"><span class="comment"># 安装编译所需依赖</span></span><br><span class="line">yum install texinfo</span><br><span class="line">yum install bison</span><br><span class="line"><span class="comment"># 指定安装目录</span></span><br><span class="line"><span class="built_in">mkdir</span> binutils</span><br><span class="line">./configure --prefix=/usr/local/binutils</span><br><span class="line"><span class="comment"># 编译</span></span><br><span class="line">make</span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">make install</span><br><span class="line"><span class="comment"># 查看新版本</span></span><br><span class="line">/usr/local/binutils/bin/objdump --version</span><br><span class="line"></span><br><span class="line">root@company-3:<span class="built_in">test</span><span class="comment"># /usr/local/binutils/bin/objdump --version</span></span><br><span class="line">GNU objdump (GNU Binutils) 2.40</span><br><span class="line">Copyright (C) 2023 Free Software Foundation, Inc.</span><br><span class="line">This program is free software; you may redistribute it under the terms of</span><br><span class="line">the GNU General Public License version 3 or (at your option) any later version.</span><br><span class="line">This program has absolutely no warranty.</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>将源程序和汇编指令映射起来<br><a class="link"   href="https://www.kancloud.cn/itfanr/i-100-gdb-tips/81888" >https://www.kancloud.cn/itfanr/i-100-gdb-tips/81888<i class="fas fa-external-link-alt"></i></a></p>
-<p>objdump显示二进制文件信息<br><a class="link"   href="https://wangchujiang.com/linux-command/c/objdump.html" >https://wangchujiang.com/linux-command/c/objdump.html<i class="fas fa-external-link-alt"></i></a></p>
-]]></content>
-      <categories>
-        <category>C语言</category>
-      </categories>
-      <tags>
-        <tag>C语言</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>了凡四训读后感</title>
     <url>/2023/03/28/%E4%BA%86%E5%87%A1%E5%9B%9B%E8%AE%AD%E8%AF%BB%E5%90%8E%E6%84%9F/</url>
     <content><![CDATA[<blockquote>
@@ -81,6 +40,47 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C语言程序的机器级代码显示</title>
+    <url>/2023/04/09/C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E4%BB%A3%E7%A0%81%E6%98%BE%E7%A4%BA/</url>
+    <content><![CDATA[<h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>去年复习408的时候，对题目中机器级代码的显示感到好奇，能够将C语言、汇编、机器代码三合一显示给你看，是怎么做到的呢？<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://raw.githubusercontent.com/crzqj/storage-public/master/20230409224129.png"
+                     
+                ></p>
+<h3 id="C语言程序的编译过程"><a href="#C语言程序的编译过程" class="headerlink" title="C语言程序的编译过程"></a>C语言程序的编译过程</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello world\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>gcc编译四部曲：</p>
+<p>1.预处理(Preprocessing)<br>2.编译(Compilation)<br>3.汇编(Assemble)<br>4.链接(Linking)<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://raw.githubusercontent.com/crzqj/storage-public/master/20230410102431.png"
+                     
+                ></p>
+<p>图片来源于：<br><a class="link"   href="https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html" >https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html<i class="fas fa-external-link-alt"></i></a></p>
+<p>我们现在要想拿到源代码、汇编代码、机器代码三者的对应关系，显然需要倒着来，从机器代码往前做逆向工程，即解析.o文件得到汇编代码和C语言源代码，这个过程在技术上叫做<strong>反汇编</strong>。专业的反汇编工具有很多，如IDA Pro、Hopper、ODA等，我们一般接触不到，并且有些是商用产品。我找到两个十分便捷的反编译工具，一个是集成在IDE中的GDB调试器，另一个是linux下的objdump工具。</p>
+<h3 id="方法一：CLion-IDE-调试"><a href="#方法一：CLion-IDE-调试" class="headerlink" title="方法一：CLion IDE 调试"></a>方法一：CLion IDE 调试</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(gdb) disas /m main  # IDE的调试窗口执行gdb命令</span><br></pre></td></tr></table></figure>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://raw.githubusercontent.com/crzqj/storage-public/master/20230409215931.png"
+                     
+                ></p>
+<h3 id="方法二：命令行工具"><a href="#方法二：命令行工具" class="headerlink" title="方法二：命令行工具"></a>方法二：命令行工具</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ gcc -o hello -g hello.c //要加上-g选项</span><br><span class="line">$ objdump -S hello</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line">0000000000400502 &lt;main&gt;:</span><br><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>()&#123;</span><br><span class="line">  400502:       55                      push   %rbp</span><br><span class="line">  400503:       48 89 e5                mov    %rsp,%rbp</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;hello world\n&quot;</span>);</span><br><span class="line">  400506:       bf a4 05 40 00          mov    <span class="variable">$0x4005a4</span>,%edi</span><br><span class="line">  40050b:       e8 f0 fe ff ff          call   400400 &lt;puts@plt&gt;</span><br><span class="line">  400510:       b8 00 00 00 00          mov    <span class="variable">$0x0</span>,%eax</span><br><span class="line">&#125;</span><br><span class="line">  400515:       5d                      pop    %rbp</span><br><span class="line">  400516:       c3                      ret</span><br><span class="line">  400517:       66 0f 1f 84 00 00 00    nopw   0x0(%rax,%rax,1)</span><br><span class="line">  40051e:       00 00 </span><br><span class="line">  ......</span><br></pre></td></tr></table></figure>
+
+<h3 id="附：objdump升级"><a href="#附：objdump升级" class="headerlink" title="附：objdump升级"></a>附：objdump升级</h3><p>有的系统自带的objdump比较旧，无法正常显示源代码，升级即可。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 单独编译安装，避免影响原版</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/</span><br><span class="line"><span class="comment"># 下载源码包</span></span><br><span class="line">wget https://ftp.gnu.org/gnu/binutils/binutils-2.40.tar.gz --no-check-certificate</span><br><span class="line"><span class="comment"># 解压</span></span><br><span class="line">tar -xf binutils-2.40.tar.gz</span><br><span class="line"><span class="comment"># 安装编译所需依赖</span></span><br><span class="line">yum install texinfo</span><br><span class="line">yum install bison</span><br><span class="line"><span class="comment"># 指定安装目录</span></span><br><span class="line"><span class="built_in">mkdir</span> binutils</span><br><span class="line">./configure --prefix=/usr/local/binutils</span><br><span class="line"><span class="comment"># 编译</span></span><br><span class="line">make</span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">make install</span><br><span class="line"><span class="comment"># 查看新版本</span></span><br><span class="line">/usr/local/binutils/bin/objdump --version</span><br><span class="line"></span><br><span class="line">root@company-3:<span class="built_in">test</span><span class="comment"># /usr/local/binutils/bin/objdump --version</span></span><br><span class="line">GNU objdump (GNU Binutils) 2.40</span><br><span class="line">Copyright (C) 2023 Free Software Foundation, Inc.</span><br><span class="line">This program is free software; you may redistribute it under the terms of</span><br><span class="line">the GNU General Public License version 3 or (at your option) any later version.</span><br><span class="line">This program has absolutely no warranty.</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>将源程序和汇编指令映射起来<br><a class="link"   href="https://www.kancloud.cn/itfanr/i-100-gdb-tips/81888" >https://www.kancloud.cn/itfanr/i-100-gdb-tips/81888<i class="fas fa-external-link-alt"></i></a></p>
+<p>objdump显示二进制文件信息<br><a class="link"   href="https://wangchujiang.com/linux-command/c/objdump.html" >https://wangchujiang.com/linux-command/c/objdump.html<i class="fas fa-external-link-alt"></i></a></p>
+]]></content>
+      <categories>
+        <category>C语言</category>
+      </categories>
+      <tags>
+        <tag>C语言</tag>
       </tags>
   </entry>
 </search>
